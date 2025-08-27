@@ -60,10 +60,32 @@ def create_env_file():
     """Create .env file if it doesn't exist"""
     if not os.path.exists('.env'):
         print("\n📝 Creating .env template...")
-        with open('.env.template', 'r') as template:
-            content = template.read()
+        env_template = """# Telegram Configuration
+TELEGRAM_TOKEN=your_bot_token_here
+TELEGRAM_CHAT_ID=your_chat_id_here
+
+# File Paths
+TARGETS_JSON=./targets.json
+OUTPUT_DIR=./output/
+
+# Tool Paths (adjust according to your system)
+SUBFINDER_PATH=subfinder
+AMASS_PATH=amass
+FINDOMAIN_PATH=findomain
+BBOT_PATH=bbot
+
+# Alternative tool paths for custom installations
+# SUBFINDER_PATH=/usr/local/bin/subfinder
+# AMASS_PATH=/usr/local/bin/amass
+# FINDOMAIN_PATH=/usr/local/bin/findomain
+# BBOT_PATH=/home/user/.local/bin/bbot
+
+# Optional: Scan Configuration
+# SCAN_TIMEOUT=300
+# MAX_CONCURRENT_SCANS=3
+"""
         with open('.env', 'w') as env_file:
-            env_file.write(content)
+            env_file.write(env_template)
         print("✅ Created .env file")
         print("⚠️  IMPORTANT: Edit .env file with your Telegram bot token and chat ID!")
     else:
@@ -77,13 +99,13 @@ def create_sample_targets():
             "targets": [
                 {
                     "domain": "example.com",
-                    "enabled": false,
+                    "enabled": False,
                     "description": "Sample domain - change this to your target",
                     "priority": "medium"
                 }
             ],
             "config": {
-                "notification_enabled": true,
+                "notification_enabled": True,
                 "scan_timeout": 300
             }
         }
